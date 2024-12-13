@@ -1,21 +1,21 @@
 import {
-	parseClientDataJSON,
-	coseAlgorithmES256,
 	ClientDataType,
-	parseAuthenticatorData,
+	coseAlgorithmES256,
+	coseAlgorithmRS256,
 	createAssertionSignatureMessage,
-	coseAlgorithmRS256
+	parseAuthenticatorData,
+	parseClientDataJSON
 } from "@oslojs/webauthn";
 import { decodePKIXECDSASignature, decodeSEC1PublicKey, p256, verifyECDSASignature } from "@oslojs/crypto/ecdsa";
 import { ObjectParser } from "@pilcrowjs/object-parser";
 import { decodeBase64 } from "@oslojs/encoding";
-import { verifyWebAuthnChallenge, getPasskeyCredential } from "$lib/server/webauthn";
+import { getPasskeyCredential, verifyWebAuthnChallenge } from "$lib/server/webauthn";
 import { createSession, generateSessionToken, setSessionTokenCookie } from "$lib/server/session";
 import { sha256 } from "@oslojs/crypto/sha2";
 import { decodePKCS1RSAPublicKey, sha256ObjectIdentifier, verifyRSASSAPKCS1v15Signature } from "@oslojs/crypto/rsa";
 
 import type { RequestEvent } from "./$types";
-import type { ClientData, AuthenticatorData } from "@oslojs/webauthn";
+import type { AuthenticatorData, ClientData } from "@oslojs/webauthn";
 import type { SessionFlags } from "$lib/server/session";
 
 // Stricter rate limiting can be omitted here since creating challenges are rate-limited
